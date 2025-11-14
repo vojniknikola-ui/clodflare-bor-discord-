@@ -145,11 +145,33 @@ setup_cloudflare() {
 deploy_discord_bot() {
     print_status "Deploying Discord bot..."
 
+    # Check if we're in the right directory
+    if [ ! -f "discord-bot/wrangler.toml" ]; then
+        print_error "wrangler.toml not found in discord-bot directory"
+        print_error "Current directory: $(pwd)"
+        print_error "Please run this script from the project root directory"
+        exit 1
+    fi
+
     cd discord-bot
+
+    # Verify wrangler.toml exists
+    if [ ! -f "wrangler.toml" ]; then
+        print_error "wrangler.toml not found in discord-bot directory"
+        cd ..
+        exit 1
+    fi
+
+    print_status "Current directory: $(pwd)"
+    print_status "Files in directory: $(ls -la)"
 
     # Run database migrations
     print_status "Running database migrations..."
-    wrangler d1 execute vacation-tracker-db --file=./migrations/init.sql
+    if wrangler d1 execute vacation-tracker-db --file=./migrations/init.sql; then
+        print_success "Database migrations completed"
+    else
+        print_warning "Database migrations may have failed, but continuing with deployment..."
+    fi
 
     # Deploy the bot
     print_status "Deploying bot to Cloudflare Workers..."
@@ -159,6 +181,7 @@ deploy_discord_bot() {
         print_success "Discord bot deployed successfully: $BOT_URL"
     else
         print_error "Bot deployment may have failed. Check the output above."
+        print_warning "You can try manual deployment with: cd discord-bot && wrangler deploy"
     fi
 
     cd ..
