@@ -1139,4 +1139,8 @@ export default {
 
     return new Response('Not found', { status: 404 });
   },
+
+  async scheduled(event, env, ctx) {
+    console.log(event.scheduledTime)
+  },
 };
