@@ -3,16 +3,10 @@ main = "src/index.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-[vars]
-DISCORD_PUBLIC_KEY = ""
-DISCORD_APPLICATION_ID = ""
-DISCORD_TOKEN = ""
-
 [[d1_databases]]
 binding = "DB"
 database_name = "vacation-tracker-db"
-database_id = ""
-preview_database_id = ""
+database_id = "5eb3403a-8738-4901-b5c5-c8d2d95e2538"
 
 # Environment-specific overrides
 [env.production]
@@ -21,9 +15,7 @@ vars = { ENVIRONMENT = "production" }
 [env.staging]
 vars = { ENVIRONMENT = "staging" }
 
-# Build configuration
-[build]
-command = "npm run build"
+
 
 # KV namespace for caching (optional)
 # [[kv_namespaces]]
