@@ -1,0 +1,41 @@
+name = "vacation-tracker-bot"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+DISCORD_PUBLIC_KEY = ""
+DISCORD_APPLICATION_ID = ""
+DISCORD_TOKEN = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vacation-tracker-db"
+database_id = ""
+preview_database_id = ""
+
+# Environment-specific overrides
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[env.staging]
+vars = { ENVIRONMENT = "staging" }
+
+# Build configuration
+[build]
+command = "npm run build"
+
+# KV namespace for caching (optional)
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = ""
+# preview_id = ""
+
+# Durable Objects (optional)
+# [durable_objects]
+# bindings = [
+#   { name = "RATE_LIMIT", class_name = "RateLimiter" }
+# ]
+
+# [migrations]
+# tag = "v1" # Should be unique for each deployment
